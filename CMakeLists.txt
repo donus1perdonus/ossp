@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(OSSP_Project VERSION 1.0.0 LANGUAGES C)
 
-# Установка стандарта C99
-set(CMAKE_C_STANDARD 99)
+# Установка стандарта C17
+set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
