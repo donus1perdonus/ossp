@@ -33,7 +33,7 @@
         {
             "id": "customArgs",
             "type": "promptString",
-            "description": "Enter arguments (for task 1: -f filename, for others: leave empty)",
+            "description": "Enter arguments",
             "default": "-f test.bin"
         }
     ]
