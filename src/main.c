@@ -14,9 +14,10 @@ void print_usage(const char *program_name) {
     printf("Использование: %s <номер_задания> [аргументы]\n", program_name);
     printf("Доступные задания: 1-8\n");
     printf("Примеры:\n");
-    printf("  %s 1 -f test.bin           # Задание 1 с файлом test.bin\n", program_name);
-    printf("  %s 2                       # Задание 2\n", program_name);
-    printf("  %s 3 source.txt backup.txt # Задание 3 - копирование файлов\n", program_name);
+    printf("  %s 1 -f test.bin                    # Задание 1 с файлом test.bin\n", program_name);
+    printf("  %s 2                                # Задание 2\n", program_name);
+    printf("  %s 3 source.txt backup.txt          # Задание 3 - копирование файлов\n", program_name);
+    printf("  %s 4 data.bin xor8                  # Задание 4 - побайтовая обработка\n", program_name);
 }
 
 int main(int argc, char *argv[]) {
@@ -84,7 +85,33 @@ int main(int argc, char *argv[]) {
             task3_main(3, task3_argv);
             break;
         case 4:
-            task4_main();
+            if (argc < 3) {
+                fprintf(stderr, "Ошибка: для задания 4 требуется указать файл и флаг\n");
+                printf("Использование: %s 4 <файл> <флаг> [параметры]\n", argv[0]);
+                return 1;
+            }
+            
+            // Парсим аргументы для задания 4
+            char *task4_args_str = argv[2];
+            char *file_path = strtok(task4_args_str, " ");
+            char *task4_flag = strtok(NULL, " ");
+            char *param = strtok(NULL, " ");
+            
+            if (file_path == NULL || task4_flag == NULL) {
+                fprintf(stderr, "Ошибка: ожидается формат '<файл> <флаг> [параметры]', получено: '%s'\n", task4_args_str);
+                printf("Использование: %s 4 <файл> <флаг> [параметры]\n", argv[0]);
+                return 1;
+            }
+            
+            // Создаем новый argv для task4_main
+            char *task4_argv[5] = {"task4", file_path, task4_flag, param, NULL};
+            int task4_argc = 4;
+            if (param == NULL) {
+                task4_argc = 3;
+                task4_argv[3] = NULL;
+            }
+            
+            task4_main(task4_argc, task4_argv);
             break;
         case 5:
             task5_main();
