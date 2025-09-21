@@ -1,114 +1,87 @@
-#include <task1.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "task1.h"
+#include "task2.h"
+#include "task3.h"
+#include "task4.h"
+#include "task5.h"
+#include "task6.h"
+#include "task7.h"
+#include "task8.h"
+
+void print_usage(const char *program_name) {
+    printf("Использование: %s <номер_задания> [аргументы]\n", program_name);
+    printf("Доступные задания: 1-8\n");
+    printf("Примеры:\n");
+    printf("  %s 1 -f test.bin    # Задание 1 с файлом test.bin\n", program_name);
+    printf("  %s 2                # Задание 2\n", program_name);
+    printf("  %s 3                # Задание 3\n", program_name);
+}
 
 int main(int argc, char *argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
+    if (argc < 2) {
+        print_usage(argv[0]);
         return 1;
     }
 
-    const char *filename = argv[1];
-    unsigned char data[] = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
-    size_t data_size = sizeof(data);
-
-    // Создание и запись файла
-    FILE *file = fopen(filename, "wb");
-    if (file == NULL) {
-        perror("Error creating file");
-        return 1;
-    }
-
-    size_t written = fwrite(data, 1, data_size, file);
-    if (written != data_size) {
-        perror("Error writing to file");
-        fclose(file);
-        return 1;
-    }
-
-    if (fclose(file) != 0) {
-        perror("Error closing file");
-        return 1;
-    }
-
-    printf("File created successfully with data: ");
-    for (size_t i = 0; i < data_size; i++) {
-        printf("%d ", data[i]);
-    }
-    printf("\n\n");
-
-    // Чтение файла с побайтовым выводом
-    file = fopen(filename, "rb");
-    if (file == NULL) {
-        perror("Error opening file for reading");
-        return 1;
-    }
-
-    printf("Reading file byte by byte:\n");
-    unsigned char byte;
-    size_t position = 0;
+    int task_number = atoi(argv[1]);
     
-    while (fread(&byte, 1, 1, file) == 1) {
-        printf("Position: %zu, Byte: %d\n", position, byte);
-        print_file_position(file);
-        printf("EOF indicator: %d\n", feof(file));
-        printf("Error indicator: %d\n", ferror(file));
-        printf("\n");
-        position++;
-    }
-
-    if (ferror(file)) {
-        perror("Error reading file");
-        fclose(file);
+    if (task_number < 1 || task_number > 8) {
+        fprintf(stderr, "Ошибка: номер задания должен быть от 1 до 8\n");
+        print_usage(argv[0]);
         return 1;
     }
 
-    if (fclose(file) != 0) {
-        perror("Error closing file");
-        return 1;
-    }
+    printf("Запуск задания %d...\n\n", task_number);
 
-    // Повторное открытие и использование fseek
-    file = fopen(filename, "rb");
-    if (file == NULL) {
-        perror("Error reopening file");
-        return 1;
-    }
-
-    // Перемещение на 3 байта от начала
-    if (fseek(file, 3, SEEK_SET) != 0) {
-        perror("Error seeking in file");
-        fclose(file);
-        return 1;
-    }
-
-    printf("After fseek to position 3:\n");
-    print_file_position(file);
-    printf("\n");
-
-    // Чтение 4 байтов
-    unsigned char buffer[4];
-    size_t bytes_read = fread(buffer, 1, 4, file);
-    
-    if (bytes_read != 4) {
-        if (ferror(file)) {
-            perror("Error reading from file");
-        } else {
-            printf("Could only read %zu bytes instead of 4\n", bytes_read);
-        }
-        fclose(file);
-        return 1;
-    }
-
-    printf("After reading 4 bytes:\n");
-    print_file_position(file);
-    printf("Buffer contains: ");
-    for (size_t i = 0; i < 4; i++) {
-        printf("%d ", buffer[i]);
-    }
-    printf("\n");
-
-    if (fclose(file) != 0) {
-        perror("Error closing file");
-        return 1;
+    switch (task_number) {
+        case 1:
+            if (argc < 3) {
+                fprintf(stderr, "Ошибка: для задания 1 требуется указать флаг -f и имя файла\n");
+                printf("Использование: %s 1 -f <имя_файла>\n", argv[0]);
+                return 1;
+            }
+            
+            // Парсим аргументы для задания 1
+            char *args_str = argv[2];
+            char *flag = strtok(args_str, " ");
+            char *filename = strtok(NULL, " ");
+            
+            if (flag == NULL || filename == NULL || strcmp(flag, "-f") != 0) {
+                fprintf(stderr, "Ошибка: ожидается формат '-f <имя_файла>', получено: '%s'\n", args_str);
+                printf("Использование: %s 1 -f <имя_файла>\n", argv[0]);
+                return 1;
+            }
+            
+            // Создаем новый argv для task1_main
+            char *task1_argv[] = {"task1", "-f", filename, NULL};
+            task1_main(3, task1_argv);
+            break;
+        case 2:
+            task2_main();
+            break;
+        case 3:
+            task3_main();
+            break;
+        case 4:
+            task4_main();
+            break;
+        case 5:
+            task5_main();
+            break;
+        case 6:
+            task6_main();
+            break;
+        case 7:
+            task7_main();
+            break;
+        case 8:
+            task8_main();
+            break;
+        default:
+            fprintf(stderr, "Ошибка: неизвестный номер задания\n");
+            return 1;
     }
 
     return 0;

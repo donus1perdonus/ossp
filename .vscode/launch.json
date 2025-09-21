@@ -2,11 +2,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "C Debug with args",
+            "name": "Debug Custom Task",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/OSSP_Project",
-            "args": ["${workspaceFolder}/test.bin"],
+            "args": ["${input:taskNumber}", "${input:customArgs}"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -21,48 +21,20 @@
             ],
             "preLaunchTask": "build",
             "miDebuggerPath": "C:\\msys64\\ucrt64\\bin\\gdb.exe"
-        },
-        {
-            "name": "C Debug (input args)",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/build/bin/OSSP_Project",
-            "args": ["${input:filename}"],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "build",
-            "miDebuggerPath": "C:\\msys64\\ucrt64\\bin\\gdb.exe"
-        },
-        {
-            "name": "C Launch",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/build/bin/OSSP_Project",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "preLaunchTask": "build"
         }
     ],
     "inputs": [
         {
-            "id": "filename",
+            "id": "taskNumber",
             "type": "promptString",
-            "description": "Enter filename for debugging",
-            "default": "task1.bin"
+            "description": "Enter task number (1-8)",
+            "default": "1"
+        },
+        {
+            "id": "customArgs",
+            "type": "promptString",
+            "description": "Enter arguments (for task 1: -f filename, for others: leave empty)",
+            "default": "-f test.bin"
         }
     ]
 }
