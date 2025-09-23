@@ -2,13 +2,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Custom Task",
+            "name": "Debug Alpine Linux",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/OSSP_Project",
             "args": ["${input:taskNumber}", "${input:customArgs}"],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/build/bin",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -17,10 +17,89 @@
                     "description": "Enable pretty-printing for gdb",
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
+                },
+                {
+                    "description": "Set disassembly flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
                 }
             ],
             "preLaunchTask": "build",
-            "miDebuggerPath": "C:\\msys64\\ucrt64\\bin\\gdb.exe"
+            "miDebuggerPath": "/usr/bin/gdb",
+            "logging": {
+                "engineLogging": false,
+                "trace": false
+            },
+            "linux": {
+                "miDebuggerPath": "/usr/bin/gdb"
+            }
+        },
+        {
+            "name": "Debug Windows",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/OSSP_Project.exe",
+            "args": ["${input:taskNumber}", "${input:customArgs}"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set disassembly flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build",
+            "miDebuggerPath": "gdb",
+            "logging": {
+                "engineLogging": false,
+                "trace": false
+            },
+            "windows": {
+                "program": "${workspaceFolder}/build/OSSP_Project.exe",
+                "miDebuggerPath": "gdb"
+            }
+        },
+        {
+            "name": "Debug Alpine (Simple)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/OSSP_Project",
+            "args": ["1", "-f test.bin"],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}/build/bin",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "linux": {
+                "miDebuggerPath": "/usr/bin/gdb"
+            }
+        },
+        {
+            "name": "Debug Windows (Simple)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/OSSP_Project.exe",
+            "args": ["1", "-f test.bin"],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}/build",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb",
+            "windows": {
+                "program": "${workspaceFolder}/build/OSSP_Project.exe",
+                "miDebuggerPath": "gdb"
+            }
         }
     ],
     "inputs": [
