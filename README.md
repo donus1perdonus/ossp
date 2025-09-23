@@ -41,6 +41,15 @@ ossp/
 
 ## Использование
 
+### Использование в WSL дистрибутиве docker-desktop
+```bash
+su -
+apk update
+apk add sudo
+adduser root wheel
+sudo apk update
+sudo apk add build-base cmake gdb
+```
 ### Компиляция
 
 ```bash
