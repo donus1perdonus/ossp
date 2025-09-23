@@ -49,7 +49,6 @@ apk add sudo
 adduser root wheel
 sudo apk update
 sudo apk add build-base cmake gdb
-sudo apk add git
 ```
 ### Компиляция
 
