@@ -2,48 +2,6 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "cmake-configure",
-            "type": "shell",
-            "command": "cmake",
-            "args": [
-                "-S",
-                "${workspaceFolder}",
-                "-B",
-                "${workspaceFolder}/build",
-                "-DCMAKE_BUILD_TYPE=Debug"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "silent",
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": ["$gcc"],
-            "windows": {
-                "args": [
-                    "-S",
-                    "${workspaceFolder}",
-                    "-B",
-                    "${workspaceFolder}/build",
-                    "-DCMAKE_BUILD_TYPE=Debug",
-                    "-G",
-                    "MinGW Makefiles"
-                ]
-            },
-            "linux": {
-                "args": [
-                    "-S",
-                    "${workspaceFolder}",
-                    "-B",
-                    "${workspaceFolder}/build",
-                    "-DCMAKE_BUILD_TYPE=Debug",
-                    "-G",
-                    "Unix Makefiles"
-                ]
-            }
-        },
-        {
             "label": "build",
             "type": "shell",
             "command": "cmake",
@@ -68,8 +26,28 @@
             "problemMatcher": [
                 "$gcc",
                 "$msCompile"
+            ]
+        },
+        {
+            "label": "cmake",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-S",
+                "${workspaceFolder}",
+                "-B",
+                "${workspaceFolder}/build",
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-G",
+                "MinGW Makefiles"
             ],
-            "dependsOn": "cmake-configure"
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            }
         },
         {
             "label": "clean",
@@ -84,28 +62,6 @@
                 "clean"
             ],
             "group": "build"
-        },
-        {
-            "label": "verify-binary-windows",
-            "type": "shell",
-            "command": "dir",
-            "args": ["${workspaceFolder}/build"],
-            "group": "test",
-            "windows": {
-                "command": "cmd",
-                "args": ["/c", "dir", "${workspaceFolder}/build"]
-            }
-        },
-        {
-            "label": "verify-binary-linux",
-            "type": "shell",
-            "command": "ls",
-            "args": ["-la", "${workspaceFolder}/build/bin/OSSP_Project"],
-            "group": "test",
-            "linux": {
-                "command": "ls",
-                "args": ["-la", "${workspaceFolder}/build/bin/OSSP_Project"]
-            }
         }
     ]
 }

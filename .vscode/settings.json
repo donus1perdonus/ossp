@@ -1,12 +1,6 @@
 {
-    "cmake.configureSettings": {
-        "CMAKE_BUILD_TYPE": "Debug"
-    },
-    "cmake.generator": "Unix Makefiles",
-    "cmake.buildDirectory": "${workspaceFolder}/build",
-    "terminal.integrated.shell.linux": "/bin/bash",
-    "terminal.integrated.automationShell.linux": "/bin/bash",
-    "[cpp]": {
-        "editor.defaultColorizer": "ms-vscode.cpptools"
+    "files.associations": {
+        "stdio.h": "c",
+        "task1.h": "c"
     }
 }
