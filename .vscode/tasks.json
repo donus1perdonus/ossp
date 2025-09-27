@@ -62,6 +62,47 @@
                 "clean"
             ],
             "group": "build"
+        },
+        {
+            "label": "build-alpine",
+            "type": "shell",
+            "command": "wsl",
+            "args": [
+                "-d",
+                "docker-desktop",
+                "sh",
+                "-c",
+                "cd /mnt/host/c/Users/artio/projects/cpp/ossp && rm -rf build-alpine && cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build --target OSSP_Project"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "clean-alpine",
+            "type": "shell",
+            "command": "wsl",
+            "args": [
+                "-d",
+                "docker-desktop",
+                "sh",
+                "-c",
+                "cd /mnt/host/c/Users/artio/projects/cpp/ossp && rm -rf build"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            }
         }
     ]
 }
